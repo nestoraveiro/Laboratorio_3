@@ -77,8 +77,8 @@ void PIN_MANAGER_Initialize (void)
     /****************************************************************************
      * Setting the Weak Pull Up and Weak Pull Down SFR(s)
      ***************************************************************************/
-    CNPDA = 0x2000;
-    CNPDB = 0x8000;
+    CNPDA = 0x0000;
+    CNPDB = 0x0000;
     CNPDC = 0x0000;
     CNPDD = 0x0000;
     CNPUA = 0x0000;
@@ -102,61 +102,5 @@ void PIN_MANAGER_Initialize (void)
     ANSELC = 0x0123;
 
 
-    
-    /****************************************************************************
-     * Interrupt On Change: positive
-     ***************************************************************************/
-    CNEN0Abits.CNIE0A13 = 1;    //Pin : RA13
-    CNEN0Bbits.CNIE0B15 = 1;    //Pin : RB15
-    
-    /****************************************************************************
-     * Interrupt On Change: flag
-     ***************************************************************************/
-    CNFAbits.CNFA13 = 0;    //Pin : RA13
-    CNFBbits.CNFB15 = 0;    //Pin : RB15
-    
-    /****************************************************************************
-     * Interrupt On Change: config
-     ***************************************************************************/
-    CNCONAbits.CNSTYLE = 1;    //Config for PORTA
-    CNCONAbits.ON = 1;    //Config for PORTA
-    CNCONBbits.CNSTYLE = 1;    //Config for PORTB
-    CNCONBbits.ON = 1;    //Config for PORTB
-
-    /****************************************************************************
-     * Interrupt On Change: Interrupt Enable
-     ***************************************************************************/
-    IFS0CLR= 1 << _IFS0_CNAIF_POSITION; //Clear CNAI interrupt flag
-    IEC0bits.CNAIE = 1; //Enable CNAI interrupt
-    IFS0CLR= 1 << _IFS0_CNBIF_POSITION; //Clear CNBI interrupt flag
-    IEC0bits.CNBIE = 1; //Enable CNBI interrupt
 }
 
-/* Interrupt service routine for the CNAI interrupt. */
-void __attribute__ ((vector(_CHANGE_NOTICE_A_VECTOR), interrupt(IPL2SOFT))) _CHANGE_NOTICE_A( void )
-{
-    if(IFS0bits.CNAIF == 1)
-    {
-        // Clear the flag
-        IFS0CLR= 1 << _IFS0_CNAIF_POSITION; // Clear IFS0bits.CNAIF
-        if(CNFAbits.CNFA13 == 1)
-        {
-            CNFACLR = 0x2000;  //Clear CNFAbits.CNFA13
-            // Add handler code here for Pin - RA13
-        }
-    }
-}
-/* Interrupt service routine for the CNBI interrupt. */
-void __attribute__ ((vector(_CHANGE_NOTICE_B_VECTOR), interrupt(IPL2SOFT))) _CHANGE_NOTICE_B( void )
-{
-    if(IFS0bits.CNBIF == 1)
-    {
-        // Clear the flag
-        IFS0CLR= 1 << _IFS0_CNBIF_POSITION; // Clear IFS0bits.CNBIF
-        if(CNFBbits.CNFB15 == 1)
-        {
-            CNFBCLR = 0x8000;  //Clear CNFBbits.CNFB15
-            // Add handler code here for Pin - RB15
-        }
-    }
-}

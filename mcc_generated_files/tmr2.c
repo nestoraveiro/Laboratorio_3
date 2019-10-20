@@ -53,8 +53,8 @@
 /**
  Section: File specific functions
 */
-void (*TMR2_InterruptHandler)(void) = NULL;// Inicializa el puntero *TMR2_InterruptHandler de culaquier tipo(primer void) y cualquier tamano(segunto void)
-void TMR2_CallBack(void); 
+void (*TMR2_InterruptHandler)(void) = NULL;
+void TMR2_CallBack(void);
 
 /**
   Section: Data Type Definitions
@@ -79,7 +79,7 @@ typedef struct _TMR_OBJ_STRUCT
     volatile bool           timerElapsed;
     /*Software Counter value*/
     volatile uint8_t        count;
-  
+
 } TMR_OBJ;
 
 static TMR_OBJ tmr2_obj;
@@ -126,8 +126,7 @@ void __attribute__ ((vector(_TIMER_2_VECTOR), interrupt(IPL1SOFT))) TMR2_ISR()
 
     tmr2_obj.count++;
     tmr2_obj.timerElapsed = true;
-    count1++;//AGREGAR MAIN Y UTILS DE LAB 2
-    count2++;//AGREGAR MAIN Y UTILS DE LAB 2
+ //   Contador++;//AGREGAR MAIN Y UTILS DE LAB 2
     IFS0CLR = _IFS0_T2IF_MASK;
 }
 
