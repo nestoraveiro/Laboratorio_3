@@ -218,7 +218,8 @@ uint16_t TMR2_Counter16BitGet( void );
         TMR2_SetInterruptHandler(&TMR2_CallBack);
     </code>
 */
-
+int count1;
+int count2;
 void TMR2_SetInterruptHandler(void (* InterruptHandler)(void));
 
 /**
