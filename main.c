@@ -45,19 +45,55 @@
 /**
   Section: Included Files
 */
+#include <stdio.h>
+#include <stdint.h>
 #include "mcc_generated_files/system.h"
+#include "mcc_generated_files/pin_manager.h" 
+#include "mcc_generated_files/tmr2.h"
+#include  "mcc_generated_files/usb/usb.h"
+
+
+
+
 
 /*
                          Main application
  */
+
+
 int main(void)
 {
     // initialize the device
     SYSTEM_Initialize();
+
     while (1)
     {
-        // Add your application code
+        if( BOTON1_GetValue() == 1) {
+            LEDB_SetHigh();
+            count1 = 0;
+        }
+        if( count1 == 10) {
+            LEDB_SetLow();
+        }
+       if( BOTON2_GetValue() == 1) {
+            LEDA_SetHigh();
+            count2 = 0;
+        }
+        if( count2 == 10) {
+            LEDA_SetLow();
+            
+        }
+        if(USBUSARTIsTxTrfReady())
+        {
+            char data[] = "Hello World";
+            putsUSBUSART(data);
+        }
+        CDCTxService();
     }
+        
+        
+        // Add your application code
+    
     return 1; 
 }
 /**

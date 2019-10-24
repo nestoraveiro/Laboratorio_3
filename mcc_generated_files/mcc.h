@@ -50,8 +50,9 @@
 #include "pin_manager.h"
 #include <stdint.h>
 #include <stdbool.h>
-#include "tmr2.h"
 #include "watchdog.h"
+#include "tmr2.h"
+#include "usb/usb.h"
 #include "interrupt_manager.h"
 #include "exceptions.h"
 #ifndef _XTAL_FREQ
