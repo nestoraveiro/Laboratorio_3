@@ -56,6 +56,7 @@
 
 
 
+
 /*
                          Main application
  */
@@ -66,29 +67,71 @@ int main(void)
     // initialize the device
     SYSTEM_Initialize();
 
+
     while (1)
     {
-        if( BOTON1_GetValue() == 1) {
+        if( BOTON1_GetValue() == 1) 
+        {
             LEDB_SetHigh();
             count1 = 0;
         }
-        if( count1 == 10) {
+        if( count1 == 10)
+        {
             LEDB_SetLow();
         }
-       if( BOTON2_GetValue() == 1) {
+       if( BOTON2_GetValue() == 1)
+        {
             LEDA_SetHigh();
             count2 = 0;
         }
-        if( count2 == 10) {
-            LEDA_SetLow();
-            
-        }
-        if(USBUSARTIsTxTrfReady())
+        if( count2 == 10) 
         {
-            char data[] = "Hello World";
-            putsUSBUSART(data);
+            LEDA_SetLow();
         }
-        CDCTxService();
+//*********************************COMIENZA USB***********************************************
+        
+//USBDeviceTasks(); Lo comento porque no me deja abrir el puerto desde el hercules
+        
+       uint8_t numBytes;
+       uint8_t buffer[64];
+                
+        if((USBGetDeviceState()< CONFIGURED_STATE)||(USBIsDeviceSuspended() == true))
+            { 
+   
+            //Either the device is not configured or we are suspended,
+                // so we don't want to execute any USB related application code
+                continue;   //go back to the top of the while loop
+            }
+        else
+            {
+
+                numBytes = getsUSBUSART(buffer,sizeof(buffer)); //until the buffer is free.
+                if(numBytes > 0)
+                {
+                   // char data[] =  buffer[64];
+                 putsUSBUSART(buffer);
+                   // putUSBUSART( buffer , buffer );
+            //we received numBytes bytes of data and they are copied into
+            //  the "buffer" variable.  We can do something with the data
+            //  here.
+                }
+                 CDCTxService();
+//                //Otherwise we are free to run USB and non-USB related user 
+//                //application code.
+//                UserApplication();
+            }    
+            
+
+//        {
+      
+////            if(USBUSARTIsTxTrfReady())
+////            {
+////                char data[] = "Hello World";
+////                putsUSBUSART(data);
+////            }
+////            CDCTxService();
+           
+//        }
     }
         
         
