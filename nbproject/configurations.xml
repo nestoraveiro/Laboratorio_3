@@ -26,7 +26,9 @@
         <itemPath>mcc_generated_files/mcc.h</itemPath>
         <itemPath>mcc_generated_files/system.h</itemPath>
         <itemPath>mcc_generated_files/tmr2.h</itemPath>
+        <itemPath>mcc_generated_files/rtcc.h</itemPath>
       </logicalFolder>
+      <itemPath>utils/utils.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -51,8 +53,10 @@
         <itemPath>mcc_generated_files/mcc.c</itemPath>
         <itemPath>mcc_generated_files/pin_manager.c</itemPath>
         <itemPath>mcc_generated_files/tmr2.c</itemPath>
+        <itemPath>mcc_generated_files/rtcc.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
+      <itemPath>utils/utils.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

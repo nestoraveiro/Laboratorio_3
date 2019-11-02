@@ -95,42 +95,31 @@ int main(void)
        uint8_t numBytes;
        uint8_t buffer[64];
                 
-        if((USBGetDeviceState()< CONFIGURED_STATE)||(USBIsDeviceSuspended() == true))
+        if((USBGetDeviceState()< CONFIGURED_STATE)||(USBIsDeviceSuspended() == true))// se verifica el estado de usb o si esta suspendido
             { 
-   
-            //Either the device is not configured or we are suspended,
-                // so we don't want to execute any USB related application code
                 continue;   //go back to the top of the while loop
             }
         else
             {
-
+            int i;   
+            for( i = 0;i < 64;i++) //Limpiamos el buffer de 64 bytes para luego leerlo 
+            {
+               buffer[i] = 0;
+            }
                 numBytes = getsUSBUSART(buffer,sizeof(buffer)); //until the buffer is free.
                 if(numBytes > 0)
                 {
-                   // char data[] =  buffer[64];
+                   
                  putsUSBUSART(buffer);
-                   // putUSBUSART( buffer , buffer );
-            //we received numBytes bytes of data and they are copied into
-            //  the "buffer" variable.  We can do something with the data
-            //  here.
+
                 }
                  CDCTxService();
-//                //Otherwise we are free to run USB and non-USB related user 
-//                //application code.
-//                UserApplication();
+
             }    
             
 
 //        {
-      
-////            if(USBUSARTIsTxTrfReady())
-////            {
-////                char data[] = "Hello World";
-////                putsUSBUSART(data);
-////            }
-////            CDCTxService();
-           
+                 
 //        }
     }
         
