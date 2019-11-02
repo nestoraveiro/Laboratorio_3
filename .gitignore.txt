@@ -1,0 +1,10 @@
+*.d
+*.obj
+*.o
+nbproject/private/
+nbproject/Package-*.bash
+build/
+debug/
+dist/
+nbproject/Makefile*
+*.map
