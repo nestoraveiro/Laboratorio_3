@@ -220,6 +220,8 @@ uint16_t TMR2_Counter16BitGet( void );
 */
 int count1;
 int count2;
+int countGPRS;
+
 void TMR2_SetInterruptHandler(void (* InterruptHandler)(void));
 
 /**
